@@ -1,0 +1,20 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Team 2ne1",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "nodaemon": "0.0.5",
+    "nodemailer": "^4.6.7",
+    "pg": "^7.4.3"
+  }
+}
