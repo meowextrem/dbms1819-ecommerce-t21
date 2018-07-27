@@ -8,11 +8,13 @@ var id = null;
 var { Client } = require('pg');
 var port = process.env.PORT || 3000
 var client = new Client({
-	database: 'postgres',
-	user: 'postgres',
-	password: 'password',
-	host: 'localhost',
-	port: 5432
+	
+	database: 'dd1ictctqi0cm3',
+	user: 'oxhzdvnaspxdtt',
+	password: 'd90fcd2cdd91a8ba06b2ac72f68f0cca6e9eb38bde8d4eb08e6d92b504514cb9',
+	host: 'ec2-54-227-240-7.compute-1.amazonaws.com',
+	port: 5432,
+	ssl: true
 });
 
 // connect to database
