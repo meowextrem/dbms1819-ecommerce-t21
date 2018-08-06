@@ -4,6 +4,8 @@
       <h1>
         {{prod_name}}
       </h1>
+	  <br>
+	  <span class="btn btn-sm btn-primary" id="addUserbtn" style="margin-right:5px" onclick="location.href='/product/update/{{prod_id}}';" ">Update Product</span>
     </section>
 
     <!-- Main content -->
@@ -15,17 +17,18 @@
         <div class="box-body" >
 		
 			<div class="box-body box-profile">
-              <img class="img-responsive" src={{prod_image}} alt="User profile picture" style="margin:auto">
+			  <!-- <span class="info-box-icon bg-aqua"><i class="fa fa-file-picture-o"></i></span> -->
+              <!-- <img class="img-responsive" src={{prod_image}} alt="User profile picture" style="margin:auto"> -->
               <h3 class="profile-username text-center"><i class="fa fa-tags"></i>{{prod_name}}</h3>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <i class="fa fa-money"></i> <b>Price: </b> <a class="pull-right">P{{prod_price}}</a>
                 </li>
                 <li class="list-group-item">
-                  <i class="fa fa-trademark"></i> <b>Brand: </b> <a class="pull-right">{{prod_brand}}</a>
+                  <i class="fa fa-trademark"></i> <b>Brand: </b> <a class="pull-right">{{brandname}}</a>
                 </li>
 				<li class="list-group-item">
-                  <i class="glyphicon glyphicon-list-alt"></i> <b>Category/Type: </b> <a class="pull-right">{{prod_type}}</a>
+                  <i class="glyphicon glyphicon-list-alt"></i> <b>Category/Type: </b> <a class="pull-right">{{categoryname}}</a>
                 </li>
 				<li class="list-group-item">
                   <i class="glyphicon glyphicon-comment"></i> <b>Description </b>
@@ -34,6 +37,12 @@
 				  <br>
 				  {{/each}}
 				  
+                </li>
+				<li class="list-group-item">
+                  <i class="fa fa-trademark"></i> <b>Tagline: </b> <a class="pull-right">{{prod_tagline}}</a>
+                </li>
+				<li class="list-group-item">
+                  <i class="fa fa-trademark"></i> <b>Warranty: </b> <a class="pull-right">{{prod_warranty}} days</a>
                 </li>
 				</ul>
 

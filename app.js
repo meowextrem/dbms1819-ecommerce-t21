@@ -41,65 +41,11 @@ res.render('home');
 
 
 app.get('/productslist', function (req, res) {
-var temp2 = [];
-var temp3 = [];
-var temp4 = [];
-var temp5 = [];
-var desktop = [];
-var phone = [];
-var tablet = [];
-var laptop = [];
-var x;
-client.query("SELECT * FROM products where product_type='desktop'", (req, data1)=>{
-	
-	for(x = 0; x < data1.rowCount; x++){
-	
-		temp2[x] = data1.rows[x];
-		
-	}	desktop = temp2;
-	
-	client.query("SELECT * FROM products where product_type='phone'", (req, data3)=>{
-	
-	for(x = 0; x < data3.rowCount; x++){
 
-	temp3[x] = data3.rows[x];
-
-	}	phone = temp3;
-	
-	
-		client.query("SELECT * FROM products where product_type='tablet'", (req, data4)=>{
-		
-		for(x = 0; x < data4.rowCount; x++){
-
-		temp4[x] = data4.rows[x];
-
-		}	tablet = temp4;
-		
-		
-		client.query("SELECT * FROM products where product_type='laptop'", (req, data5)=>{
-	
-		for(x = 0; x < data5.rowCount; x++){
-
-		temp5[x] = data5.rows[x];
-
-		}	laptop = temp5;
-		// console.log(desktop);
-		// console.log(phone);
-		// console.log(tablet);
-		// console.log(laptop);
-		res.render('product',{
-			products1 : desktop,
-			products2 : phone,
-			products3 : tablet,
-			products4 : laptop
-			});
-	
-		});
-	
+client.query("SELECT * FROM products", (req, data1)=>{
+	res.render('product',{
+		data: data1.rows
 	});
-
-	});
-	
 	
 });
 	
@@ -110,21 +56,233 @@ client.query("SELECT * FROM products where product_type='desktop'", (req, data1)
 
 app.get('/products/:userId', function (req, res) {
 const userId = req.params.userId;
-client.query("SELECT * FROM products where product_id="+userId+" ", (req, data2)=>{
-			var str = data2.rows[0].product_desc;
+var temp3 = [];
+var temp4 = [];
+var temp5 = [];
+var desktop = [];
+var products = [];
+var category = [];
+var brand = [];
+var x;
+client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)=>{
+	
+	for(x = 0; x < data3.rowCount; x++){
+
+	temp3[x] = data3.rows[x];
+
+	}	products = temp3;
+	
+	
+		client.query("SELECT * FROM products_category where category_id="+products[0].category_id+" ", (req, data4)=>{
+		
+		for(x = 0; x < data4.rowCount; x++){
+
+		temp4[x] = data4.rows[x];
+
+		}	category = temp4;
+		
+		
+		client.query("SELECT * FROM brands where brand_id="+products[0].brand_id+" ", (req, data5)=>{
+	
+		for(x = 0; x < data5.rowCount; x++){
+
+		temp5[x] = data5.rows[x];
+
+		}	brand = temp5;
+		var str = products[0].description;
 			var desc = str.split(",");
-			console.log(desc);
-			res.render('productview',{
-			prod_image: data2.rows[0].picture,
-			prod_id: data2.rows[0].product_id,
-			prod_name: data2.rows[0].product_name,
-			prod_type: data2.rows[0].product_type,
+		
+		res.render('productview',{
+			
+			prod_id: products[0].product_id,
+			prod_name: products[0].name,
 			prod_desc: desc,
-			prod_brand: data2.rows[0].brand,
-			prod_price: data2.rows[0].price,
+			prod_tagline: products[0].tagline,
+			prod_price: products[0].price,
+			prod_warranty: products[0].warranty,
+			categoryname : category[0].name,
+			brandname : brand[0].name
 			});
+	
+		});
+	
 	});
+
+	});
+	
+	
+
+
 });
+
+app.get('/brand/create', function (req, res) {
+
+			res.render('brandcreate');
+	});
+	
+app.post('/brand/submit', function (req, res) {
+	console.log(req.body.name);
+client.query("INSERT INTO brands (name,description) VALUES ('"+req.body.name+"','"+req.body.description+"') ");
+	// res.render('brandcreate');
+			res.redirect('/brands');
+	});	
+	
+app.get('/brands', function (req, res) {
+client.query("SELECT * FROM brands ORDER BY brand_id ASC", (req, data1)=>{
+			console.log(data1.rows);
+			res.render('brands',{
+				data:data1.rows
+			});
+			
+			
+		
+	});	 
+    
+});	
+
+app.get('/category/create', function (req, res) {
+
+			res.render('categorycreate');
+	});
+	
+app.post('/category/submit', function (req, res) {
+	console.log(req.body.name);
+client.query("INSERT INTO products_category (name) VALUES ('"+req.body.name+"') ");
+	// res.render('brandcreate');
+			res.redirect('/categories');
+	});	
+	
+app.get('/product/create', function (req, res) {
+var temp4 = [];
+var temp5 = [];
+var category = [];
+var brand = [];
+	client.query("SELECT * FROM products_category ORDER BY category_id ASC", (req, data4)=>{
+		
+		for(x = 0; x < data4.rowCount; x++){
+
+		temp4[x] = data4.rows[x];
+
+		}	category = temp4;
+		
+		
+		client.query("SELECT * FROM brands ORDER BY brand_id ASC", (req, data5)=>{
+	
+		for(x = 0; x < data5.rowCount; x++){
+
+		temp5[x] = data5.rows[x];
+
+		}	brand = temp5;
+
+		res.render('productcreate',{
+			categorydata : category,
+			branddata : brand
+			});
+	
+		});
+	
+	});
+	
+	
+	
+	
+
+			
+	});
+	
+app.post('/product/submit', function (req, res) {
+	// console.log(req.body.category);
+client.query("INSERT INTO products (name,description,tagline,price,warranty,category_id,brand_id) VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.tagline+"','"+req.body.price+"','"+req.body.warranty+"','"+req.body.category+"','"+req.body.brand+"') ");
+	// res.render('brandcreate');
+			res.redirect('/productslist');
+	});
+
+app.get('/product/update/:userId', function (req, res) {
+const userId = req.params.userId;
+var temp3 = [];
+var temp4 = [];
+var temp5 = [];
+var desktop = [];
+var products = [];
+var category = [];
+var brand = [];
+var x;
+client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)=>{
+	
+	for(x = 0; x < data3.rowCount; x++){
+
+	temp3[x] = data3.rows[x];
+
+	}	products = temp3;
+	
+	
+		client.query("SELECT * FROM products_category ORDER BY category_id ASC ", (req, data4)=>{
+		
+		for(x = 0; x < data4.rowCount; x++){
+
+		temp4[x] = data4.rows[x];
+
+		}	category = temp4;
+		
+		
+		client.query("SELECT * FROM brands ORDER BY brand_id ASC ", (req, data5)=>{
+	
+		for(x = 0; x < data5.rowCount; x++){
+
+		temp5[x] = data5.rows[x];
+
+		}	brand = temp5;
+		
+		res.render('productupdate',{
+			
+			prod_id: products[0].product_id,
+			prod_name: products[0].name,
+			prod_desc: products[0].description,
+			prod_tagline: products[0].tagline,
+			prod_price: products[0].price,
+			prod_warranty: products[0].warranty,
+			prod_cat_id: products[0].category_id,
+			prod_brand_id: products[0].brand_id,
+			categorydata : category,
+			branddata : brand
+			});
+	
+		});
+	
+	});
+
+	});
+	
+	
+	
+	
+	
+			
+	});
+	
+app.post('/product/updatesubmit/:userId', function (req, res) {
+	const userId = req.params.userId;
+	// console.log(req.body.category);
+client.query("UPDATE products SET name = '"+req.body.name+"',description = '"+req.body.description+"',tagline='"+req.body.tagline+"',price='"+req.body.price+"',warranty='"+req.body.warranty+"',category_id= '"+req.body.category+"',brand_id= '"+req.body.brand+"' WHERE product_id='"+userId+"' ");
+	// res.render('brandcreate');
+			res.redirect('/productslist');
+	});		
+	
+app.get('/categories', function (req, res) {
+client.query("SELECT * FROM products_category ORDER BY category_id ASC", (req, data1)=>{
+			console.log(data1.rows);
+			res.render('categories',{
+				data:data1.rows
+			});
+			
+			
+		
+	});	 
+    
+});	
+	
+	
+
 
 app.post('/send-email/:userId', function (req, res) {
 	 const userId = req.params.userId;
