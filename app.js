@@ -240,6 +240,7 @@ client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)
 			prod_name: products[0].name,
 			prod_desc: products[0].description,
 			prod_tagline: products[0].tagline,
+			prod_picture: products[0].picture,
 			prod_price: products[0].price,
 			prod_warranty: products[0].warranty,
 			prod_cat_id: products[0].category_id,
