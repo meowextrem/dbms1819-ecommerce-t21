@@ -95,6 +95,7 @@ client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)
 		res.render('productview',{
 			
 			prod_id: products[0].product_id,
+			prod_picture: products[0].picture,
 			prod_name: products[0].name,
 			prod_desc: desc,
 			prod_tagline: products[0].tagline,
@@ -192,7 +193,7 @@ var brand = [];
 	
 app.post('/product/submit', function (req, res) {
 	// console.log(req.body.category);
-client.query("INSERT INTO products (name,description,tagline,price,warranty,category_id,brand_id) VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.tagline+"','"+req.body.price+"','"+req.body.warranty+"','"+req.body.category+"','"+req.body.brand+"') ");
+client.query("INSERT INTO products (name,description,tagline,price,warranty,category_id,brand_id,picture) VALUES ('"+req.body.name+"','"+req.body.description+"','"+req.body.tagline+"','"+req.body.price+"','"+req.body.warranty+"','"+req.body.category+"','"+req.body.brand+"','"+req.body.picture+"') ");
 	// res.render('brandcreate');
 			res.redirect('/productslist');
 	});
@@ -263,7 +264,7 @@ client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)
 app.post('/product/updatesubmit/:userId', function (req, res) {
 	const userId = req.params.userId;
 	// console.log(req.body.category);
-client.query("UPDATE products SET name = '"+req.body.name+"',description = '"+req.body.description+"',tagline='"+req.body.tagline+"',price='"+req.body.price+"',warranty='"+req.body.warranty+"',category_id= '"+req.body.category+"',brand_id= '"+req.body.brand+"' WHERE product_id='"+userId+"' ");
+client.query("UPDATE products SET name = '"+req.body.name+"',description = '"+req.body.description+"',tagline='"+req.body.tagline+"',price='"+req.body.price+"',warranty='"+req.body.warranty+"',category_id= '"+req.body.category+"',brand_id= '"+req.body.brand+"',picture= '"+req.body.picture+"' WHERE product_id='"+userId+"' ");
 	// res.render('brandcreate');
 			res.redirect('/productslist');
 	});		
