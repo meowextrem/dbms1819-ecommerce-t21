@@ -56,65 +56,30 @@ client.query("SELECT * FROM products", (req, data1)=>{
 
 app.get('/products/:userId', function (req, res) {
 const userId = req.params.userId;
-var temp3 = [];
-var temp4 = [];
-var temp5 = [];
-var desktop = [];
-var products = [];
-var category = [];
-var brand = [];
-var x;
-client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)=>{
+
+client.query("SELECT * FROM products LEFT JOIN brands ON products.brand_id=brands.brand_id RIGHT JOIN products_category ON products.category_id=products_category.category_id where product_id="+userId+" ", (req, data3)=>{
 	
-	for(x = 0; x < data3.rowCount; x++){
-
-	temp3[x] = data3.rows[x];
-
-	}	products = temp3;
-	
-	
-		client.query("SELECT * FROM products_category where category_id="+products[0].category_id+" ", (req, data4)=>{
-		
-		for(x = 0; x < data4.rowCount; x++){
-
-		temp4[x] = data4.rows[x];
-
-		}	category = temp4;
-		
-		
-		client.query("SELECT * FROM brands where brand_id="+products[0].brand_id+" ", (req, data5)=>{
-	
-		for(x = 0; x < data5.rowCount; x++){
-
-		temp5[x] = data5.rows[x];
-
-		}	brand = temp5;
-		var str = products[0].description;
+		console.log(data3);
+		var str = data3.rows[0].description;
 			var desc = str.split(",");
 		
 		res.render('productview',{
 			
-			prod_id: products[0].product_id,
-			prod_picture: products[0].picture,
-			prod_name: products[0].name,
+			prod_id: data3.rows[0].product_id,
+			prod_picture: data3.rows[0].picture,
+			prod_name: data3.rows[0].name,
 			prod_desc: desc,
-			prod_tagline: products[0].tagline,
-			prod_price: products[0].price,
-			prod_warranty: products[0].warranty,
-			categoryname : category[0].name,
-			brandname : brand[0].name
+			prod_tagline: data3.rows[0].tagline,
+			prod_price: data3.rows[0].price,
+			prod_warranty: data3.rows[0].warranty,
+			categoryname : data3.rows[0].category_name,
+			brandname : data3.rows[0].brand_name
 			});
 	
 		});
 	
 	});
 
-	});
-	
-	
-
-
-});
 
 app.get('/brand/create', function (req, res) {
 
@@ -122,8 +87,8 @@ app.get('/brand/create', function (req, res) {
 	});
 	
 app.post('/brand/submit', function (req, res) {
-	console.log(req.body.name);
-client.query("INSERT INTO brands (name,description) VALUES ('"+req.body.name+"','"+req.body.description+"') ");
+	console.log(req.body.description);
+client.query("INSERT INTO brands (brand_name,brand_description) VALUES ('"+req.body.name+"','"+req.body.description+"') ");
 	// res.render('brandcreate');
 			res.redirect('/brands');
 	});	
@@ -148,7 +113,7 @@ app.get('/category/create', function (req, res) {
 	
 app.post('/category/submit', function (req, res) {
 	console.log(req.body.name);
-client.query("INSERT INTO products_category (name) VALUES ('"+req.body.name+"') ");
+client.query("INSERT INTO products_category (category_name) VALUES ('"+req.body.name+"') ");
 	// res.render('brandcreate');
 			res.redirect('/categories');
 	});	
@@ -200,51 +165,21 @@ client.query("INSERT INTO products (name,description,tagline,price,warranty,cate
 
 app.get('/product/update/:userId', function (req, res) {
 const userId = req.params.userId;
-var temp3 = [];
-var temp4 = [];
-var temp5 = [];
-var desktop = [];
-var products = [];
-var category = [];
-var brand = [];
-var x;
-client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)=>{
-	
-	for(x = 0; x < data3.rowCount; x++){
-
-	temp3[x] = data3.rows[x];
-
-	}	products = temp3;
+client.query("SELECT * FROM products LEFT JOIN brands ON products.brand_id=brands.brand_id RIGHT JOIN products_category ON products.category_id=products_category.category_id where product_id="+userId+" ", (req, data3)=>{
 	
 	
-		client.query("SELECT * FROM products_category ORDER BY category_id ASC ", (req, data4)=>{
-		
-		for(x = 0; x < data4.rowCount; x++){
-
-		temp4[x] = data4.rows[x];
-
-		}	category = temp4;
-		
-		
-		client.query("SELECT * FROM brands ORDER BY brand_id ASC ", (req, data5)=>{
-	
-		for(x = 0; x < data5.rowCount; x++){
-
-		temp5[x] = data5.rows[x];
-
-		}	brand = temp5;
 		
 		res.render('productupdate',{
 			
-			prod_id: products[0].product_id,
-			prod_name: products[0].name,
-			prod_desc: products[0].description,
-			prod_tagline: products[0].tagline,
-			prod_picture: products[0].picture,
-			prod_price: products[0].price,
-			prod_warranty: products[0].warranty,
-			prod_cat_id: products[0].category_id,
-			prod_brand_id: products[0].brand_id,
+			prod_id: data3.rows[0].product_id,
+			prod_name: data3.rows[0].name,
+			prod_desc: data3.rows[0].description,
+			prod_tagline: data3.rows[0].tagline,
+			prod_picture: data3.rows[0].picture,
+			prod_price: data3.rows[0].price,
+			prod_warranty: data3.rows[0].warranty,
+			prod_cat_id: data3.rows[0].category_id,
+			prod_brand_id: data3.rows[0].brand_id,
 			categorydata : category,
 			branddata : brand
 			});
@@ -253,15 +188,7 @@ client.query("SELECT * FROM products where product_id="+userId+" ", (req, data3)
 	
 	});
 
-	});
-	
-	
-	
-	
-	
-			
-	});
-	
+
 app.post('/product/updatesubmit/:userId', function (req, res) {
 	const userId = req.params.userId;
 	// console.log(req.body.category);
