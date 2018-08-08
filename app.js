@@ -43,23 +43,34 @@ res.render('home');
 app.get('/productslist', function (req, res) {
 
 client.query("SELECT * FROM products", (req, data1)=>{
+	console.log(data1);
 	res.render('product',{
 		data: data1.rows
 	});
 	
 });
 	
-	
-	
+});
+
+app.get('/customers', function (req, res) {
+
+client.query("SELECT * FROM products", (req, data1)=>{
+	console.log(data1);
+	res.render('customers',{
+		data: data1.rows
 	});
+	
+});
+	
+});
 
 
 app.get('/products/:userId', function (req, res) {
 const userId = req.params.userId;
-
 client.query("SELECT * FROM products LEFT JOIN brands ON products.brand_id=brands.brand_id RIGHT JOIN products_category ON products.category_id=products_category.category_id where product_id="+userId+" ", (req, data3)=>{
 	
-		console.log(data3);
+		
+		
 		var str = data3.rows[0].description;
 			var desc = str.split(",");
 		
@@ -81,13 +92,16 @@ client.query("SELECT * FROM products LEFT JOIN brands ON products.brand_id=brand
 	});
 
 
+
+
+
 app.get('/brand/create', function (req, res) {
 
 			res.render('brandcreate');
 	});
 	
 app.post('/brand/submit', function (req, res) {
-	console.log(req.body.description);
+	// console.log(req.body.description);
 client.query("INSERT INTO brands (brand_name,brand_description) VALUES ('"+req.body.name+"','"+req.body.description+"') ");
 	// res.render('brandcreate');
 			res.redirect('/brands');
@@ -95,7 +109,7 @@ client.query("INSERT INTO brands (brand_name,brand_description) VALUES ('"+req.b
 	
 app.get('/brands', function (req, res) {
 client.query("SELECT * FROM brands ORDER BY brand_id ASC", (req, data1)=>{
-			console.log(data1.rows);
+			// console.log(data1.rows);
 			res.render('brands',{
 				data:data1.rows
 			});
@@ -112,7 +126,7 @@ app.get('/category/create', function (req, res) {
 	});
 	
 app.post('/category/submit', function (req, res) {
-	console.log(req.body.name);
+	// console.log(req.body.name);
 client.query("INSERT INTO products_category (category_name) VALUES ('"+req.body.name+"') ");
 	// res.render('brandcreate');
 			res.redirect('/categories');
@@ -199,7 +213,7 @@ client.query("UPDATE products SET name = '"+req.body.name+"',description = '"+re
 	
 app.get('/categories', function (req, res) {
 client.query("SELECT * FROM products_category ORDER BY category_id ASC", (req, data1)=>{
-			console.log(data1.rows);
+			// console.log(data1.rows);
 			res.render('categories',{
 				data:data1.rows
 			});
@@ -215,32 +229,76 @@ client.query("SELECT * FROM products_category ORDER BY category_id ASC", (req, d
 
 app.post('/send-email/:userId', function (req, res) {
 	 const userId = req.params.userId;
-      let transporter = nodeMailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-              user: 'team2ne1javiernicomedes@gmail.com',
-              pass: 'team2ne1'
-          }
-      });
-      let mailOptions = {
-          from: req.body.email, // sender address
-          to: 'team2ne1javiernicomedes@gmail.com', // list of receivers
-          subject: 'E-Commerce Contact Email', // Subject line
-          text: 'Product Id: '+ req.body.id+'<br> Customer Name: '+ req.body.cust_name+'/n Phone: '+ req.body.phone +'/n Email: '+ req.body.email +'/n Customer Quantity: '+ req.body.quantity, // plain text body
-          html: '<p><b>Product Id:</b> '+ userId+'<br> <b>Customer Name:</b> '+ req.body.cust_name+'<br> <b>Phone:</b> '+ req.body.phone +'<br> <b>Email:</b> '+ req.body.email +'<br> <b>Product Quantity:</b> '+ req.body.quantity + '</p>'// html body
-      };
+	 
+	 client.query("SELECT * FROM customer where email='"+req.body.email+"' ", (req2, data4)=>{
+		// console.log(data4);	
+		console.log(data4.rowCount);
+		if(data4.rowCount >= 1){
+			
+			client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req3, data11)=>{
+				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
+				let transporter = nodeMailer.createTransport({
+				host: 'smtp.gmail.com',
+				port: 465,
+				secure: true,
+				auth: {
+				user: 'team2ne1javiernicomedes@gmail.com',
+				pass: 'team2ne1'
+				}
+				});
+				let mailOptions = {
+				from: req.body.email, // sender address
+				to: 'team2ne1javiernicomedes@gmail.com', // list of receivers
+				subject: 'Team 2ne1 Product Order Form', // Subject line
+				text: '<p>Here is the new customer order request! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>', // plain text body
+				html: '<p>Here is the new customer order request! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>'// html body
+				};
 
-      transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-			  		  res.render('error');
-	
-              return console.log(error);
-		  }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-			  res.render('success');
-		  });
+				transporter.sendMail(mailOptions, (error, info) => {
+				if (error) {
+				  res.render('error');
+
+				return console.log(error);
+				}
+				
+				let mailOptions2 = {
+				from: 'team2ne1javiernicomedes@gmail.com', // sender address
+				to: req.body.email, // list of receivers
+				subject: 'Team 2ne1 Product Order Form', // Subject line
+				text: '<p>Here are your order request details!! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>', // plain text body
+				html: '<p>Here are your order request details!! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>'// html body
+				};
+
+				transporter.sendMail(mailOptions2, (error2, info2) => {
+				if (error2) {
+				  res.render('error');
+
+				return console.log(error2);
+				}
+				console.log('Message %s sent: %s', info2.messageId, info2.response);
+				res.render('success');
+				}); 
+				}); 
+				
+			 });
+			
+		 }
+		 else if(data4.rowCount == 0){
+			 console.log('no data exist!')
+			 client.query("INSERT INTO customer (email,first_name,last_name,street,municipality,province,zipcode) VALUES ('"+req.body.email+"','"+req.body.fname+"','"+req.body.lname+"','"+req.body.street+"','"+req.body.municipality+"','"+req.body.province+"','"+req.body.zipcode+"')");
+			 client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req4, data11)=>{
+				 console.log(data11.rows[0].customer_id + " " +userId+ " "+req.body.quantity);
+				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
+				 res.render('success');
+			 });
+		 }
+		 
+	 });
+	 
+	 
+	 
+	 
+     
       });
 
 
