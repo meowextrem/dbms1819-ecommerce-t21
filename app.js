@@ -407,6 +407,56 @@ app.post('/send-email/:userId', function (req, res) {
 			 client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req4, data11)=>{
 				 console.log(data11.rows[0].customer_id + " " +userId+ " "+req.body.quantity);
 				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
+				 
+			
+			client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req3, data11)=>{
+				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
+				let transporter = nodeMailer.createTransport({
+				host: 'smtp.gmail.com',
+				port: 465,
+				secure: true,
+				auth: {
+				user: 'team2ne1javiernicomedes@gmail.com',
+				pass: 'team2ne1'
+				}
+				});
+				let mailOptions = {
+				from: req.body.email, // sender address
+				to: 'team2ne1javiernicomedes@gmail.com', // list of receivers
+				subject: 'Team 2ne1 Product Order Form', // Subject line
+				text: '<p>Here is the new customer order request! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>', // plain text body
+				html: '<p>Here is the new customer order request! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>'// html body
+				};
+
+				transporter.sendMail(mailOptions, (error, info) => {
+				if (error) {
+				  res.render('error');
+
+				return console.log(error);
+				}
+				
+				let mailOptions2 = {
+				from: 'team2ne1javiernicomedes@gmail.com', // sender address
+				to: req.body.email, // list of receivers
+				subject: 'Team 2ne1 Product Order Form', // Subject line
+				text: '<p>Here are your order request details!! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>', // plain text body
+				html: '<p>Here are your order request details!! <br> <b>Product Id</b>: '+ userId+'<br> <b>Product Quantity:</b> '+ req.body.quantity+'<br> <b>Customer Name</b>: '+ req.body.fname+' ' +req.body.lname+' <br> <b>Email</b>: '+ req.body.email +'<br> <b>Street</b>: '+ req.body.street+' <br> <b>Municipality</b>: '+ req.body.municipality +' <br> <b>Province</b>: '+ req.body.province +' <br> <b>Zipcode</b>: '+ req.body.zipcode+ '</p>'// html body
+				};
+
+				transporter.sendMail(mailOptions2, (error2, info2) => {
+				if (error2) {
+				  res.render('error');
+
+				return console.log(error2);
+				}
+				console.log('Message %s sent: %s', info2.messageId, info2.response);
+				res.render('success');
+				}); 
+				}); 
+				
+			 });
+				 
+				 
 				 res.render('success');
 			 });
 		 }
