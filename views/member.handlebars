@@ -1,0 +1,79 @@
+<div class="content-wrapper" background="./Profile Page of Benz_files/grid.gif">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Members
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h2 class="box-title">{{fname}}' Profile</h2>
+        </div>
+        <div class="box-body">
+		
+			<div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src={{user_image}} alt="User profile picture">
+              <h3 class="profile-username text-center"><i class="glyphicon glyphicon-user"></i> Full Name: {{fullname}}</h3>
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <i class="glyphicon glyphicon-envelope"></i> <b>Email: </b> <a class="pull-right">{{email}}</a>
+                </li>
+                <li class="list-group-item">
+                  <i class="glyphicon glyphicon-phone"></i> <b>Cellphone No: </b> <a class="pull-right">{{cnumber}}</a>
+                </li>
+                <li class="list-group-item">
+                  <i class="fa fa-gamepad"></i> <b>Hobbies</b> 
+				  {{#each hobbies}}
+				  <a class="pull-right">{{this}}</a><br>
+				  {{/each}}	
+				</li>
+				<li class="list-group-item">
+                  <i class="fa fa-laptop"></i> <b>Skills</b> 
+				  {{#each skills}}
+				  <a class="pull-right">{{this}}</a>
+				  <br>
+				  {{/each}}
+				</li>
+				<li class="list-group-item">
+                  <i class="fa fa-thumbs-up"></i> <b>Social Media Accounts</b> 
+				  <div class="row">
+					<div class="pull-right col-md-3">
+					<a class="btn btn-block btn-social btn-facebook"  href={{fb_link}}>
+					<i class="fa fa-facebook"></i> {{facebook_name}}
+					</a>
+					<a class="btn btn-block btn-social btn-google"  href={{i_link}}>
+					<i class="fa fa-instagram"></i> {{insta_name}}
+					</a>
+					<a class="btn btn-block btn-social btn-twitter"  href={{t_link}}>
+					<i class="fa fa-twitter"></i> @{{twitter_name}}
+					</a>
+					<a class="btn btn-block btn-social btn-google"  href={{y_link}}>
+					<i class="fa fa-youtube-play"></i> {{youtube_name}}
+					</a>
+					<a class="btn btn-block btn-social btn-github"  href={{git_link}}>
+					<i class="fa fa-github"></i> {{github_name}}
+					</a>
+					
+					<br>
+					</div>
+				  </div>
+				  
+                </li>
+              </ul>
+
+              
+            </div>
+        </div>
+        
+		<!-- /.box-body -->
+         </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>

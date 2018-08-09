@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Brands
+        Orders
       </h1>
     </section>
 
@@ -14,21 +14,25 @@
 		
 		<div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Brand List</h3>
-			  <span class="btn btn-sm btn-primary pull-right" id="addUserbtn" style="margin-right:5px" onclick="location.href='/brand/create';" ">Create Brand</span>
+              <h3 class="box-title">Order List</h3>
+			  <span class="btn btn-sm btn-primary pull-right hidden" id="addUserbtn" style="margin-right:5px" onclick="location.href='/brand/create';" >Create Brand</span>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
               <table class="table table-striped">
                 <tr>   
-                  <th>Brand Name</th>
-                  <th>Brand Description</th>
+                  <th>Order Date</th>
+                  <th>Product Name</th>
+				  <th>Quantity</th>
+				  <th>Ordered By</th>
                 </tr>
 				{{#each data}}
                 <tr>
                    
-                  <td>{{this.brand_name}}</td>
-                  <td>{{this.brand_description}}</td>
+                  <td>{{this.order_date}}</td>
+                  <td>{{this.name}}</td>
+				  <td>{{this.quantity}}</td>
+				  <td>{{this.first_name}} {{this.last_name}}</td>
                   
                 </tr>
 				{{/each}}
