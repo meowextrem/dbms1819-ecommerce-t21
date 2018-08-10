@@ -237,7 +237,7 @@ var brand = [];
 		temp4[x] = data4.rows[x];
 
 		}	category = temp4;
-		console.log(category);
+		
 
 		
 		client.query("SELECT * FROM brands ORDER BY brand_id ASC", (req, data5)=>{
@@ -247,20 +247,21 @@ var brand = [];
 		temp5[x] = data5.rows[x];
 
 		}	brand = temp5;
-
+		console.log(products);
 		res.render('productupdate',{
-			prod_id: products.product_id,
-			prod_name: products.name,
-			prod_desc: products.description,
-			prod_tagline: products.tagline,
-			prod_picture: products.picture,
-			prod_price: products.price,
-			prod_warranty: products.warranty,
-			prod_cat_id: products.category_id,
-			prod_brand_id: products.brand_id,
+			prod_id: products[0].product_id,
+			prod_name: products[0].name,
+			prod_desc: products[0].description,
+			prod_tagline: products[0].tagline,
+			prod_picture: products[0].picture,
+			prod_price: products[0].price,
+			prod_warranty: products[0].warranty,
+			prod_cat_id: products[0].category_id,
+			prod_brand_id: products[0].brand_id,
 			categorydata : category,
 			branddata : brand
 			});
+		
 	
 		});
 	

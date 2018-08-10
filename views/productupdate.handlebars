@@ -42,19 +42,19 @@
                 </div>
 				<div class="form-group">
                   <label>Product Category</label>
-                  <select name="category" class="form-control" required="required" value="{{prod_cat_id}}">
+				  <select id="category1" name="category" class="form-control" required="required" value="{{prod_cat_id}}">
 				    
 				    {{#each categorydata}}
-                    <option value={{this.category_id}}>{{this.category_name}}</option>
+                    <option value="{{this.category_id}}">{{this.category_name}}</option>
                     {{/each}}
                   </select>
                 </div>
 				<div class="form-group">
 				  <label>Product Brand</label>
-                  <select name="brand" class="form-control" required="required" value="{{prod_brand_id}}">
+                  <select id="brand1" name="brand" class="form-control" required="required">
 				    
 				    {{#each branddata}}
-                    <option value={{this.brand_id}}>{{this.brand_name}}</option>
+                    <option value="{{this.brand_id}}">{{this.brand_name}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -79,3 +79,39 @@
     </section>
     <!-- /.content -->
   </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#brand1').val('{{prod_brand_id}}');
+	$('#category1').val('{{prod_cat_id}}');
+	 
+	});
+	
+	function showModal(var4,var5){
+		if(var4=='delete'){
+		$('#myModal').modal("show");  
+		$('#mod-title').html("Delete Applicant");
+		$('#mod-content').html(
+					'<input type="text" id="updateIdx" hidden>'+
+					'<div class="form-group">'+
+					'<p>Would you like to delete this data?</p>'+
+					'</div>'							
+);
+				  $('#notif-mess').html(' ');
+		$('#mod-footer').html('<button id="addUserSubmitform"  class="btn btn-primary" onclick=showModal("delete2") >Submit</button>'+
+		'<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>');
+		 $('#updateIdx').val(var5);
+
+		}
+		else if(var4=='delete2'){
+				
+				var updateIdx = $('#updateIdx').val();
+				
+				  $('#myModal').modal("hide");  
+				  location.href='/product/delete/{{prod_id}}';	
+				
+				
+				
+		}
+		
+		}
+</script>	
