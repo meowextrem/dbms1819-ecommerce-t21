@@ -96,6 +96,36 @@
   {{{body}}}
   <!-- /.content-wrapper -->
 
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id='mod-title'></h4>
+      </div>
+      <div class="modal-body">
+		<div id='mod-content'>
+		</div>
+			
+		
+		
+      </div>
+      <div class="modal-footer">
+		<span class="pull-left" id="notif-mess"></span>
+        <div id="mod-footer">
+		
+		</div>
+		
+		
+      </div>
+    </div>
+
+  </div>
+</div>  
+  
+  
   
 </div>
 <!-- ./wrapper -->
@@ -112,10 +142,44 @@
 <script src="/assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/assets/dist/js/demo.js"></script>
-<script>
+<script type="text/javascript" src="/function.js"></script>
+<script type="text/javascript">
   $(document).ready(function () {
     $('.sidebar-menu').tree()
-  })
-</script>
+	
+
+	});
+	
+	function showModal(var4,var5){
+		if(var4=='delete'){
+		$('#myModal').modal("show");  
+		$('#mod-title').html("Delete Applicant");
+		$('#mod-content').html(
+					'<input type="text" id="updateIdx" hidden>'+
+					'<div class="form-group">'+
+					'<p>Would you like to delete this data?</p>'+
+					'</div>'							
+);
+				  $('#notif-mess').html(' ');
+		$('#mod-footer').html('<button id="addUserSubmitform"  class="btn btn-primary" onclick=showModal("delete2") >Submit</button>'+
+		'<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>');
+		 $('#updateIdx').val(var5);
+
+		}
+		else if(var4=='delete2'){
+				
+				var updateIdx = $('#updateIdx').val();
+				
+				  $('#myModal').modal("hide");  
+				  location.href='/product/delete/{{prod_id}}';	
+				
+				
+				
+		}
+		
+		}
+</script>	
+  
+  
 </body>
 </html>

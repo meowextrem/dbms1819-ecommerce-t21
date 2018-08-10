@@ -45,7 +45,7 @@
                   <select name="category" class="form-control" required="required">
 				    
 				    {{#each categorydata}}
-                    <option value={{this.category_id}}>{{this.category_name}}</option>
+                    <option value="{{this.category_id}}">{{this.category_name}}</option>
                     {{/each}}
                   </select>
                 </div>
@@ -54,7 +54,7 @@
                   <select name="brand" class="form-control" required="required">
 				    
 				    {{#each branddata}}
-                    <option value={{this.brand_id}}>{{this.brand_name}}</option>
+                    <option value="{{this.brand_id}}">{{this.brand_name}}</option>
                     {{/each}}
                   </select>
                 </div>

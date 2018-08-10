@@ -6,7 +6,7 @@
       </h1>
 	  <br>
 	  <span class="btn btn-sm btn-primary" id="addUserbtn" style="margin-right:5px" onclick="location.href='/product/update/{{prod_id}}';" ">Update Product</span>
-	  <span class="btn btn-sm btn-primary" id="addUserbtn" style="margin-right:5px" onclick="location.href='/product/delete/{{prod_id}}';" ">Delete Product</span>
+	  <span class="btn btn-sm btn-primary pull-right" id="addUserbtn" style="margin-right:5px" onclick="showModal('delete','{{prod_id}}')">Delete Product</span>	
     </section>
 
     <!-- Main content -->
@@ -85,7 +85,7 @@
                   <input name="street" type="text" class="form-control" placeholder="Enter ..." required="required">
                 </div>
 				<div class="form-group">
-                  <label>Municipality</label>
+                  <label>Municipality/City</label>
                   <input name="municipality" type="text" class="form-control" placeholder="Enter ..." required="required">
                 </div>
 				<div class="form-group">

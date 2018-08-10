@@ -215,26 +215,71 @@ client.query("INSERT INTO products (name,description,tagline,price,warranty,cate
 
 app.get('/product/update/:userId', function (req, res) {
 const userId = req.params.userId;
-client.query("SELECT * FROM products LEFT JOIN brands ON products.brand_id=brands.brand_id RIGHT JOIN products_category ON products.category_id=products_category.category_id where product_id="+userId+" ", (req, data3)=>{
-	
-	
+var temp1 = [];
+var products = [];
+var temp4 = [];
+var temp5 = [];
+var category = [];
+var brand = [];
+  client.query("SELECT * FROM products WHERE product_id="+userId+"  ",(req,data3)=>{
 		
+	 for(x = 0; x < data3.rowCount; x++){
+
+		temp1[x] = data3.rows[x];
+
+		}	products = temp1;
+		
+	  
+	  client.query("SELECT * FROM products_category ORDER BY category_id ASC", (req, data4)=>{
+		
+		for(x = 0; x < data4.rowCount; x++){
+
+		temp4[x] = data4.rows[x];
+
+		}	category = temp4;
+		console.log(category);
+
+		
+		client.query("SELECT * FROM brands ORDER BY brand_id ASC", (req, data5)=>{
+	
+		for(x = 0; x < data5.rowCount; x++){
+
+		temp5[x] = data5.rows[x];
+
+		}	brand = temp5;
+
 		res.render('productupdate',{
-			
-			prod_id: data3.rows[0].product_id,
-			prod_name: data3.rows[0].name,
-			prod_desc: data3.rows[0].description,
-			prod_tagline: data3.rows[0].tagline,
-			prod_picture: data3.rows[0].picture,
-			prod_price: data3.rows[0].price,
-			prod_warranty: data3.rows[0].warranty,
-			prod_cat_id: data3.rows[0].category_id,
-			prod_brand_id: data3.rows[0].brand_id,
+			prod_id: products.product_id,
+			prod_name: products.name,
+			prod_desc: products.description,
+			prod_tagline: products.tagline,
+			prod_picture: products.picture,
+			prod_price: products.price,
+			prod_warranty: products.warranty,
+			prod_cat_id: products.category_id,
+			prod_brand_id: products.brand_id,
 			categorydata : category,
 			branddata : brand
 			});
 	
 		});
+	
+	});
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+  });
+	
+	
+	
+	
+	
+
+
 	
 	});
 	
@@ -402,15 +447,13 @@ app.post('/send-email/:userId', function (req, res) {
 			
 		 }
 		 else if(data4.rowCount == 0){
-			 console.log('no data exist!')
+			 console.log('no data exist!');
 			 client.query("INSERT INTO customer (email,first_name,last_name,street,municipality,province,zipcode) VALUES ('"+req.body.email+"','"+req.body.fname+"','"+req.body.lname+"','"+req.body.street+"','"+req.body.municipality+"','"+req.body.province+"','"+req.body.zipcode+"')");
 			 client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req4, data11)=>{
 				 console.log(data11.rows[0].customer_id + " " +userId+ " "+req.body.quantity);
 				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
 				 
 			
-			client.query("SELECT * FROM customer where email='"+req.body.email+"' ",(req3, data11)=>{
-				client.query("INSERT INTO orders (customer_id,product_id,quantity,order_date) VALUES ('"+data11.rows[0].customer_id+"','"+userId+"','"+req.body.quantity+"',CURRENT_TIMESTAMP)"); 
 				let transporter = nodeMailer.createTransport({
 				host: 'smtp.gmail.com',
 				port: 465,
@@ -453,11 +496,10 @@ app.post('/send-email/:userId', function (req, res) {
 				res.render('success');
 				}); 
 				}); 
-				
-			 });
+			
 				 
 				 
-				 res.render('success');
+				 
 			 });
 		 }
 		 
