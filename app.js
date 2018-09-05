@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const Product = require('./models/product');
 const Category = require('./models/category');
 const Brand = require('./models/brand');
-const Customer = require('./models/Customer');
+const Customer = require('./models/customer');
 const Order = require('./models/order');
 var options = {
   viewEngine: {
