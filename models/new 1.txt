@@ -1,0 +1,7 @@
+SELECT count(*),date(order_date)
+FROM orders  
+where order_date > (CURRENT_DATE - INTERVAL '7 days')
+GROUP BY date(order_date)
+ORDER BY date(order_date) DESC
+
+ALTER database dd1ictctqi0cm3 SET timezone ='Asia / Manila'
