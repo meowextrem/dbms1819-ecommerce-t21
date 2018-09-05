@@ -49,6 +49,7 @@ const Category = require('./models/category');
 const Brand = require('./models/brand');
 const Customer = require('./models/customer');
 const Order = require('./models/order');
+const Dashboard = require('./models/dashboard');
 var options = {
   viewEngine: {
     extname: '.hbs',
@@ -61,8 +62,36 @@ var options = {
 };
 
 app.get('/admin/', function (req, res) {
-  res.render('home', {
-    layout: 'admin'
+  Dashboard.custNoOfOrders(client, {}, function (tableData) {
+    Dashboard.custHighPay(client, {}, function (tableData2) {
+      Dashboard.prodMost(client, {}, function (tableData3) {
+        Dashboard.prodLeast(client, {}, function (tableData4) {
+          Dashboard.mostBrand(client, {}, function (tableData5) {
+            Dashboard.mostCategory(client, {}, function (tableData6) {
+              Dashboard.totalSalesSeven(client, {}, function (tableData7) {
+                Dashboard.totalSalesThirty(client, {}, function (tableData8) {
+                  Dashboard.dailyOrderCount(client, {}, function (tableData9) {
+                    console.log(tableData9);
+                    res.render('dashboard', {
+                      layout: 'admin',
+                      dataData1: tableData,
+                      dataData2: tableData2,
+                      dataData3: tableData3,
+                      dataData4: tableData4,
+                      dataData5: tableData5,
+                      dataData6: tableData6,
+                      dataData7: tableData7,
+                      dataData8: tableData8,
+                      dataData9: tableData9
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
   });
 });
 
