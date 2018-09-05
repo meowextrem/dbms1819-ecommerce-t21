@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Team 2ne1</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/assets/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/assets/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/assets/dist/css/skins/_all-skins.min.css">
+  <link rel="icon" type="image/gif/png" href="/logolong.png">
+
+  <!-- Google Font -->
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
+</head>
+<body class="hold-transition skin-black-light sidebar-mini">
+<!-- jQuery 3 -->
+<script src="/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="/assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/assets/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/assets/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/assets/dist/js/demo.js"></script>
+<!-- Moment.js -->
+<script src="/assets/bower_components/moment/moment.js"></script>
+
+<!-- Site wrapper -->
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini">AD</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg">ADMIN</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">ASSIGNMENTS</li>
+        <li class="active treeview menu-open">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>ADMIN PAGES</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/admin/"><i class="fa fa-home"></i>Home</a></li>
+      <li class="treeview">
+      <a href="#">
+      <i class="fa fa-dashboard"></i> <span>Products</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+      <li><a href="/admin/product/create"><i class="fa fa-male"></i>Add Product</a></li>
+      <li><a href="/admin/productslist"><i class="fa fa-female"></i>Update Product</a></li>
+      </ul>
+      </li>
+
+      <li class="treeview">
+      <a href="#">
+      <i class="fa fa-dashboard"></i> <span>Brands</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+      <li><a href="/admin/brands"><i class="fa fa-male"></i>Brands List</a></li>
+      <li><a href="/admin/brand/create"><i class="fa fa-female"></i>Create Brand</a></li>
+      </ul>
+      </li>
+      <li class="treeview">
+      <a href="#">
+      <i class="fa fa-dashboard"></i> <span>Category</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+      <li><a href="/admin/categories"><i class="fa fa-male"></i>Categories List</a></li>
+      <li><a href="/admin/category/create"><i class="fa fa-female"></i>Create Category</a></li>
+      </ul>
+      </li>
+
+      <li class="treeview">
+      <a href="#">
+      <i class="fa fa-dashboard"></i> <span>Orders</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+      <li><a href="/admin/orders"><i class="fa fa-male"></i>Order List</a></li>
+      </ul>
+      </li>
+
+      <li class="treeview">
+      <a href="#">
+      <i class="fa fa-dashboard"></i> <span>Customer</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+      </a>
+      <ul class="treeview-menu">
+      <li><a href="/admin/customers"><i class="fa fa-male"></i>Customer List</a></li>
+      </ul>
+      </li>
+
+
+      </ul>
+        </li>
+        
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- =============================================== -->
+
+  <!-- Content Wrapper. Contains page content -->
+  {{{body}}}
+  <!-- /.content-wrapper -->
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id='mod-title'></h4>
+      </div>
+      <div class="modal-body">
+    <div id='mod-content'>
+    </div>
+      
+    
+    
+      </div>
+      <div class="modal-footer">
+    <span class="pull-left" id="notif-mess"></span>
+        <div id="mod-footer">
+    
+    </div>
+    
+    
+      </div>
+    </div>
+
+  </div>
+</div>  
+  
+  
+  
+</div>
+<!-- ./wrapper -->
+
+  
+  
+</body>
+</html>

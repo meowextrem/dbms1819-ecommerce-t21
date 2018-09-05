@@ -28,8 +28,7 @@
                 </tr>
 				{{#each data}}
                 <tr>
-                   
-                  <td>{{this.order_date}}</td>
+				  <td>{{moment this.order_date format="MMMM Do YYYY, dddd , h:mm:ss A"}}</td>
                   <td>{{this.name}}</td>
 				  <td>{{this.quantity}}</td>
 				  <td>{{this.first_name}} {{this.last_name}}</td>
@@ -52,3 +51,4 @@
     </section>
     <!-- /.content -->
   </div>
+

@@ -15,7 +15,6 @@
 		<div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Brand List</h3>
-			  <span class="btn btn-sm btn-primary pull-right" id="addUserbtn" style="margin-right:5px" onclick="location.href='/brand/create';" ">Create Brand</span>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -23,12 +22,14 @@
                 <tr>   
                   <th>Brand Name</th>
                   <th>Brand Description</th>
+				  <th>Options</th>
                 </tr>
 				{{#each data}}
                 <tr>
                    
                   <td>{{this.brand_name}}</td>
                   <td>{{this.brand_description}}</td>
+				  <td><span class="btn btn-sm btn-primary pull-left" id="addUserbtn" style="margin-right:5px" onclick="location.href = '/admin/brands/update/{{this.brand_id}}';">Update</a></td>
                   
                 </tr>
 				{{/each}}
@@ -48,3 +49,14 @@
     </section>
     <!-- /.content -->
   </div>
+  
+  
+  <script type="text/javascript">
+  $(document).ready(function () {
+    
+	 $('#category1').val({{prod_cat_id}});
+	 $('#brand1').val({{prod_brand_id}});
+	});
+	
+	
+</script>
