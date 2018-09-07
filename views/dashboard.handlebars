@@ -18,7 +18,7 @@
 			<div class="info-box-content">
 			<span class="info-box-text">Total Sales</span>
 			{{#each dataData7}}
-			<span class="info-box-number">{{this.totalsale}}</span>
+			<span class="info-box-number">₱ {{this.totalsale}}</span>
 			{{/each}}
 			<div class="progress">
 			<div class="progress-bar" style="width: 50%"></div>
@@ -38,7 +38,7 @@
 			<div class="info-box-content">
 			<span class="info-box-text">Total Sales</span>
 			{{#each dataData8}}
-			<span class="info-box-number">{{this.totalsale}}</span>
+			<span class="info-box-number">₱ {{this.totalsale}}</span>
 			{{/each}}
 			<div class="progress">
 			<div class="progress-bar" style="width: 50%"></div>
@@ -127,7 +127,7 @@
 				<tr>
 				<td>{{this.row}}</td>
 				<td>{{this.customer_name}}</td>
-				<td>{{this.totalpay}}</td>
+				<td>₱ {{this.totalpay}}</td>
 				</tr>
 				{{/each}}
 				</tbody>
@@ -241,7 +241,7 @@
 				<div class="box box-info">
 
 				<div class="box-header with-border">
-				<h3 class="box-title">Top 10 Most Ordered Brands</h3>
+				<h3 class="box-title">Top 3 Most Ordered Brands</h3>
 
 				<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -283,7 +283,7 @@
 				<div class="box box-info">
 
 				<div class="box-header with-border">
-				<h3 class="box-title">Top 10 Most Ordered Categories</h3>
+				<h3 class="box-title">Top 3 Most Ordered Categories</h3>
 
 				<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -356,7 +356,7 @@
 				{{#each dataData9}}
 				<tr>
 				<td>{{moment this.date format="MMMM Do YYYY"}}</td>
-				<td>{{this.count}}</td>
+				<td>{{this.count}} Order/s</td>
 				</tr>
 				{{/each}}
 				</tbody>
