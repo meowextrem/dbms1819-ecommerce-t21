@@ -1,5 +1,16 @@
 var Brand = {
-
+  list2: function (client, filter, callback) {
+    const brandQuery = `
+      SELECT * 
+      FROM brands
+      ORDER BY brand_id ASC
+    `;
+    client.query(brandQuery, (req, data) => {
+      console.log(data.rows);
+      callback(data.rows);
+    });
+  },
+  
   list: function (client, filter, callback) {
     var pagenum = `${filter.page}`;
     var pagesize = 10;

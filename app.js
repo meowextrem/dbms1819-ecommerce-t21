@@ -234,7 +234,7 @@ app.get('/admin/productslist/:page', function (req, res) {
 
 app.get('/admin/product/create', function (req, res) {
   Category.list(client, {}, function (category) {
-    Brand.list(client, {}, function (brand) {
+    Brand.list2(client, {}, function (brand) {
       res.render('productcreate', {
         layout: 'admin',
         categorydata: category,
@@ -416,7 +416,7 @@ app.get('/admin/product/update/:userId', function (req, res) {
   const userId = req.params.userId;
   Product.getById(client, userId, function (products) {
     Category.list(client, {}, function (category) {
-      Brand.list(client, {}, function (brand) {
+      Brand.list2(client, {}, function (brand) {
         // console.log(products);
         res.render('productupdate', {
           layout: 'admin',
