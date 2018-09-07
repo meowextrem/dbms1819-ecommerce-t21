@@ -145,21 +145,91 @@ app.get('/member/charlene', function (req, res) {
   });
 });
 
-app.get('/productslist', function (req, res) {
-  Product.list(client, {}, function (products) {
+app.get('/productslist/:page', function (req, res) {
+  var page = parseInt(req.params.page);
+  var maxpage = 3;
+  var lastpage, nextpage;
+  if(page===1){
+    lastpage = 1;
+    nextpage = page+1;
+  Product.list(client, {page}, function (products) {
     res.render('product', {
-      data: products
+      data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });	
+  }
+  else if(page===maxpage){
+    lastpage = page-1;
+    nextpage = maxpage;
+  Product.list(client, {page}, function (products) {
+    res.render('product', {
+      data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
     });
   });
+  }
+  else{
+    lastpage = page-1;
+	nextpage = page+1;
+  Product.list(client, {page}, function (products) {
+    res.render('product', {
+      data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });  
+  }
 });
 
-app.get('/admin/productslist', function (req, res) {
-  Product.list(client, {}, function (products) {
+app.get('/admin/productslist/:page', function (req, res) {
+  var page = parseInt(req.params.page);
+  var maxpage = 3;
+  var lastpage, nextpage;
+  if(page===1){
+    lastpage = 1;
+    nextpage = page+1;
+  Product.list(client, {page}, function (products) {
     res.render('productadmin', {
       layout: 'admin',
-      data: products
+	  data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });	
+  }
+  else if(page===maxpage){
+    lastpage = page-1;
+    nextpage = maxpage;
+  Product.list(client, {page}, function (products) {
+    res.render('productadmin', {
+      layout: 'admin',
+	  data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
     });
   });
+  }
+  else{
+    lastpage = page-1;
+	nextpage = page+1;
+  Product.list(client, {page}, function (products) {
+    res.render('productadmin', {
+      layout: 'admin',
+	  data: products,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });  
+  }
 });
 
 app.get('/admin/product/create', function (req, res) {
@@ -248,14 +318,52 @@ app.post('/brand/submit', function (req, res) {
   });
 });
 
-app.get('/admin/brands', function (req, res) {
-  Brand.list(client, {}, function (brands) {
+app.get('/admin/brands/:page', function (req, res) {
+  var page = parseInt(req.params.page);
+  var maxpage = 3;
+  var lastpage, nextpage;
+  if(page===1){
+    lastpage = 1;
+    nextpage = page+1;
+  Brand.list(client, {page}, function (brands) {
     // console.log(data1.rows);
     res.render('brands', {
       layout: 'admin',
-      data: brands
+	  data: brands,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });	
+  }
+  else if(page===maxpage){
+    lastpage = page-1;
+    nextpage = maxpage;
+  Brand.list(client, {page}, function (brands) {
+    // console.log(data1.rows);
+    res.render('brands', {
+      layout: 'admin',
+	  data: brands,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
     });
   });
+  }
+  else{
+    lastpage = page-1;
+	nextpage = page+1;
+  Brand.list(client, {page}, function (brands) {
+    // console.log(data1.rows);
+    res.render('brands', {
+      layout: 'admin',
+	  data: brands,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });  
+  }
 });
 
 app.get('/admin/brands/update/:id', function (req, res) {
@@ -355,14 +463,52 @@ app.post('/admin/product/updatesubmit/:userId', function (req, res) {
   });
 });
 
-app.get('/admin/customers', function (req, res) {
-  Customer.list(client, function (customer) {
+app.get('/admin/customers/:page', function (req, res) {
+  var page = parseInt(req.params.page);
+  var maxpage = 3;
+  var lastpage, nextpage;
+  if(page===1){
+    lastpage = 1;
+    nextpage = page+1;
+  Customer.list(client,{page}, function (customer) {
     // console.log(data1);
     res.render('customers', {
       layout: 'admin',
-      data: customer
+      data: customer,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });	
+  }
+  else if(page===maxpage){
+    lastpage = page-1;
+    nextpage = maxpage;
+  Customer.list(client,{page}, function (customer) {
+    // console.log(data1);
+    res.render('customers', {
+      layout: 'admin',
+      data: customer,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
     });
   });
+  }
+  else{
+    lastpage = page-1;
+	nextpage = page+1;
+  Customer.list(client,{page}, function (customer) {
+    // console.log(data1);
+    res.render('customers', {
+      layout: 'admin',
+      data: customer,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });  
+  }
 });
 
 app.get('/admin/customer/:custId', function (req, res) {
@@ -384,14 +530,52 @@ app.get('/admin/customer/:custId', function (req, res) {
   });
 });
 
-app.get('/admin/orders', function (req, res) {
-  Order.list(client, {}, function (orders) {
+app.get('/admin/orders/:page', function (req, res) {
+  var page = parseInt(req.params.page);
+  var maxpage = 3;
+  var lastpage, nextpage;
+  if(page===1){
+    lastpage = 1;
+    nextpage = page+1;
+  Order.list(client, {page}, function (orders) {
     res.render('orders', {
       layout: 'admin',
       data: orders,
-      date: orders.order_date
+      date: orders.order_date,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });	
+  }
+  else if(page===maxpage){
+    lastpage = page-1;
+    nextpage = maxpage;
+  Order.list(client, {page}, function (orders) {
+    res.render('orders', {
+      layout: 'admin',
+      data: orders,
+      date: orders.order_date,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
     });
   });
+  }
+  else{
+    lastpage = page-1;
+	nextpage = page+1;
+  Order.list(client, {page}, function (orders) {
+    res.render('orders', {
+      layout: 'admin',
+      data: orders,
+      date: orders.order_date,
+	  page: page,
+	  previous: lastpage,
+	  next: nextpage
+    });
+  });  
+  }
 });
 
 app.post('/send-email/:userId', function (req, res) {

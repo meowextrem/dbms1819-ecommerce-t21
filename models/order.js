@@ -1,15 +1,18 @@
 var Order = {
 
   list: function (client, filter, callback) {
+    var pagenum = `${filter.page}`;
+    var pagesize = 10;
     const orderQuery = `
       SELECT *
       FROM orders
       INNER JOIN customer
       ON orders.customer_id=customer.customer_id
       INNER JOIN products ON orders.product_id=products.product_id
-      ORDER BY orders_id
-      ASC
-    `;
+      ORDER BY orders_id ASC
+      OFFSET ((`+pagenum+`-1)*10) ROWS
+      FETCH NEXT 10 ROWS ONLY
+	  `;
     client.query(orderQuery, (req, data) => {
       console.log(data.rows);
       callback(data.rows);

@@ -1,11 +1,14 @@
 var Brand = {
 
   list: function (client, filter, callback) {
+    var pagenum = `${filter.page}`;
+    var pagesize = 10;
     const brandQuery = `
       SELECT * 
       FROM brands
-      ORDER BY brand_id
-      ASC
+      ORDER BY brand_id ASC
+      OFFSET ((`+pagenum+`-1)*10) ROWS
+      FETCH NEXT 10 ROWS ONLY
     `;
     client.query(brandQuery, (req, data) => {
       console.log(data.rows);

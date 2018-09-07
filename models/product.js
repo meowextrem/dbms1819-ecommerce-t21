@@ -1,10 +1,18 @@
 var Product = {
+	
   list: function (client, filter, callback) {
-    const productListQuery = `
-      SELECT * FROM products
+    var pagenum = `${filter.page}`;
+    var pagesize = 10;
+	const productListQuery = `
+      SELECT *, COUNT (*) OVER() as totalRows
+	  FROM products
+      ORDER BY product_id ASC
+      OFFSET ((`+pagenum+`-1)*10) ROWS
+      FETCH NEXT 10 ROWS ONLY
       `;
+	console.log(productListQuery);
     client.query(productListQuery, (req, data) => {
-      // console.log(data.rows);
+      console.log(data);
       callback(data.rows);
     });
   },

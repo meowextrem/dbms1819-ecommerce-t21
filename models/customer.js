@@ -1,8 +1,13 @@
 var Customer = {
-  list: function (client, callback) {
-    const listQuery = `
+  list: function (client, filter, callback) {
+    var pagenum = `${filter.page}`;
+    var pagesize = 10;
+  const listQuery = `
     SELECT *
-      FROM customer
+    FROM customer
+	ORDER BY customer_id ASC
+	OFFSET ((`+pagenum+`-1)*10) ROWS
+    FETCH NEXT 10 ROWS ONLY
     `;
     client.query(listQuery, (req, data) => {
       console.log(data.rows);
