@@ -53,12 +53,12 @@ var Dashboard = {
   prodLeast: function (client, filter, callback) {
     const dashboardQuery = `
       SELECT products.name AS product_name,
-      ROW_NUMBER() OVER (ORDER BY sum(orders.quantity) ASC) as row ,
-      sum(orders.quantity) as total
+      ROW_NUMBER() OVER (ORDER BY COUNT(orders.quantity) ASC) as row ,
+      COUNT(orders.quantity) as total
       FROM orders
   INNER JOIN products ON orders.product_id=products.product_id
   GROUP BY product_name
-  ORDER BY sum(orders.quantity) ASC
+  ORDER BY COUNT(orders.quantity) ASC
   LIMIT 10
       `;
     client.query(dashboardQuery, (req, data) => {
