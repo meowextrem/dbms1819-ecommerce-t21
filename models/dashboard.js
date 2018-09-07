@@ -77,7 +77,7 @@ var Dashboard = {
   ON products.brand_id=brands.brand_id
   GROUP BY brand_name
   ORDER BY sum(orders.quantity) DESC
-  LIMIT 10
+  LIMIT 3
       `;
     client.query(dashboardQuery, (req, data) => {
       // console.log(data.rows);
@@ -95,7 +95,7 @@ var Dashboard = {
   ON products.category_id=category.category_id
   GROUP BY category_name
   ORDER BY sum(orders.quantity) DESC
-  LIMIT 10
+  LIMIT 3
       `;
     client.query(dashboardQuery, (req, data) => {
       // console.log(data.rows);
